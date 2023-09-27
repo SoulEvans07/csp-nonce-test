@@ -3,7 +3,7 @@ import { SimpleMiddleware } from "./types";
 const trimCspRules = (rules: string): string =>
   rules.replace(/\s{2,}/g, " ").trim();
 export const getCspRules = (nonce: string, isDev: boolean): string => {
-  const strict = true ? "" : `'nonce-${nonce}' 'strict-dynamic'`;
+  const strict = isDev ? "" : `'nonce-${nonce}' 'strict-dynamic'`;
 
   const tescoHosts = [
     "csp-nonce-test.vercel.app",
@@ -30,7 +30,6 @@ export const getCspRules = (nonce: string, isDev: boolean): string => {
     base-uri 'self';
     form-action 'self';
     frame-src 'self';
-    frame-ancestors 'none';
     block-all-mixed-content;
     upgrade-insecure-requests;
     media-src ${httpsTescoHosts.join(" ")};
@@ -45,7 +44,6 @@ export const cspMiddleware: SimpleMiddleware = (request, response) => {
   const isDev = process.env["NODE_ENV"] === "development";
   const cspHeader = getCspRules(nonce, isDev);
 
-  response.headers.set("x-env", `env: ${process.env["NODE_ENV"]}`);
   response.headers.set("x-nonce", nonce);
   response.headers.set("Content-Security-Policy", trimCspRules(cspHeader));
   request.headers.set("x-nonce", nonce);
