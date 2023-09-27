@@ -3,7 +3,7 @@ import { SimpleMiddleware } from "./types";
 const trimCspRules = (rules: string): string =>
   rules.replace(/\s{2,}/g, " ").trim();
 export const getCspRules = (nonce: string, isDev: boolean): string => {
-  const strict = false ? "" : `'nonce-${nonce}' 'strict-dynamic'`;
+  const strict = true ? "" : `'nonce-${nonce}' 'strict-dynamic'`;
 
   const tescoHosts = [
     "csp-nonce-test.vercel.app",
