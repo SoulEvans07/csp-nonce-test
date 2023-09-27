@@ -6,7 +6,7 @@ export const getCspRules = (nonce: string, isDev: boolean): string => {
   const strict = isDev ? "" : `'nonce-${nonce}' 'strict-dynamic'`;
 
   const tescoHosts = [
-    "csp-nonce-test-82ktfusf2-soulevans07.vercel.app",
+    "csp-nonce-test.vercel.app",
     "*.tesco.com",
     "*.tesco.ie",
     "*.itesco.cz",
