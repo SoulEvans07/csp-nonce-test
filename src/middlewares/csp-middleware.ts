@@ -45,9 +45,9 @@ export const cspMiddleware: SimpleMiddleware = (request, response) => {
   const isDev = process.env["NODE_ENV"] === "development";
   const cspHeader = getCspRules(nonce, isDev);
 
+  response.headers.set("x-env", `env: ${process.env["NODE_ENV"]}`);
   response.headers.set("x-nonce", nonce);
   response.headers.set("Content-Security-Policy", trimCspRules(cspHeader));
   request.headers.set("x-nonce", nonce);
   request.headers.set("Content-Security-Policy", trimCspRules(cspHeader));
-  request.headers.set("x-env", `env: ${process.env["NODE_ENV"]}`);
 };
